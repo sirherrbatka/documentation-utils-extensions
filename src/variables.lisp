@@ -5,9 +5,11 @@
 
 
 (defparameter *documentation-sections*
-  '((:arguments . "Arguments:")
+  '((:syntax . "Syntax:")
+    (:arguments . "Arguments:")
     (:examples . "Examples:")
     (:description . "Description:")
     (:returns . "Returns:")
     (:side-effects . "Side Effects:")
+    (:thread-safety . "Thread Safety:")
     (:notes . "Notes:")))
