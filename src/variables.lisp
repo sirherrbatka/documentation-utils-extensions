@@ -13,4 +13,5 @@
     (:side-effects . "Side Effects:")
     (:affected-by . "Affected by")
     (:thread-safety . "Thread Safety:")
-    (:notes . "Notes:")))
+    (:notes . "Notes:")
+    (:see-also . "See also:")))
