@@ -10,6 +10,7 @@
   :depends-on ( :documentation-utils )
   :serial T
   :pathname "src"
+  :description "Set of extensions for documentation-utils."
   :components ((:file "package")
                (:file "classes")
                (:file "variables")
