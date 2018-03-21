@@ -104,6 +104,7 @@
                                       type
                                       name
                                       (arguments list))
+  (declare (ignore type name))
   (let ((first-item t))
     (with-output-to-string (stream)
       (map nil
@@ -116,4 +117,4 @@
                                    documentation
                                    first-item)
                  (setf first-item nil))))
-           *documentation-sections*))))
+           (read-documentation-sections formatter)))))

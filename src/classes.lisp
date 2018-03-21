@@ -6,7 +6,9 @@
 
 
 (defclass rich-formatter (docs:documentation-formatter)
-  ())
+  ((%documentation-sections :initarg :documentation-sections
+                            :initform *documentation-sections*
+                            :reader read-documentation-sections)))
 
 
 (defclass rich-aggregating-formatter (aggregating-formatter rich-formatter)
