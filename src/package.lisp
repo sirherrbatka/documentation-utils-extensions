@@ -5,6 +5,7 @@
   (:use #:common-lisp)
   (:nicknames :docs.ext)
   (:export
+   #:%documentation-sections
    #:*documentation*
    #:*documentation-sections*
    #:aggregating-formatter
@@ -12,5 +13,6 @@
    #:documentation-collection
    #:find-documentation
    #:make-documentation-collection
+   #:read-documentation-sections
    #:rich-aggregating-formatter
    #:rich-formatter))
