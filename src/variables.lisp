@@ -10,6 +10,7 @@
     (:examples . "Examples:")
     (:description . "Description:")
     (:returns . "Returns:")
+    (:exceptional-situations . "Exceptional situations:")
     (:side-effects . "Side Effects:")
     (:affected-by . "Affected by")
     (:thread-safety . "Thread Safety:")
