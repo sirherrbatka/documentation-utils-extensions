@@ -9,6 +9,8 @@
     (:arguments . "Arguments:")
     (:examples . "Examples:")
     (:description . "Description:")
+    (:responsibilities . "Responsibilities:")
+    (:collaborators . "Collaborators:")
     (:returns . "Returns:")
     (:exceptional-situations . "Exceptional situations:")
     (:side-effects . "Side Effects:")
