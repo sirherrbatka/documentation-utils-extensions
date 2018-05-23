@@ -2,6 +2,7 @@
 
 
 (defgeneric %find-documentation (documentation type name))
+(defgeneric %paragraphs-with-label (documentation label))
 (defgeneric insert-documentation (documentation type name arguments))
 (defgeneric format-to-stream (formatter
                               stream
@@ -58,6 +59,23 @@
                                  name
                                  arguments)
   nil)
+
+
+(defmethod %paragraphs-with-label ((documentation (eql nil))
+                                   label)
+  nil)
+
+
+(defmethod %paragraphs-with-label ((documentation documentation-collection) 
+                                   label)
+  (let ((result nil))
+    (maphash (lambda (key value)
+               (declare (ignore key))
+               (let ((labeled (getf value label)))
+                 (unless (null labeled)
+                   (push labeled result))))
+             (read-content documentation))
+    result))
 
 
 (defmethod docs:format-documentation

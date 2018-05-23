@@ -7,3 +7,7 @@
 
 (defun clear-documentation ()
   (%clear-documentation *documentation*))
+
+
+(defun paragraphs-with-label (label)
+  (%paragraphs-with-label *documentation* label))

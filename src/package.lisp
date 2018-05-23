@@ -13,6 +13,7 @@
    #:documentation-collection
    #:find-documentation
    #:make-documentation-collection
+   #:paragraphs-with-label
    #:read-documentation-sections
    #:rich-aggregating-formatter
    #:rich-formatter))
