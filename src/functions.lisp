@@ -9,6 +9,7 @@
   (%clear-documentation *documentation*))
 
 
+:; TODO Needs to be a little more complex (general purpose filtering function: filter by package, by type of documented object, possibly by name of the symbol and documentation context).
 (defun paragraphs-with-label (label)
   (%paragraphs-with-label *documentation* label))
 
