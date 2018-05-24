@@ -66,14 +66,17 @@
   nil)
 
 
-(defmethod %paragraphs-with-label ((documentation documentation-collection) 
+(defmethod %paragraphs-with-label ((documentation documentation-collection)
                                    label)
   (let ((result nil))
     (maphash (lambda (key value)
                (declare (ignore key))
-               (let ((labeled (getf value label)))
-                 (unless (null labeled)
-                   (push labeled result))))
+               (maphash (lambda (key value)
+                          (declare (ignore key))
+                          (let ((labeled (getf value label)))
+                            (unless (null labeled)
+                              (push labeled result))))
+                        value))
              (read-content documentation))
     result))
 

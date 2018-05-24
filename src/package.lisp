@@ -11,6 +11,7 @@
    #:aggregating-formatter
    #:clear-documentation
    #:documentation-collection
+   #:execute-paragraphs-with-label
    #:find-documentation
    #:make-documentation-collection
    #:paragraphs-with-label
