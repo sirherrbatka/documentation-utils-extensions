@@ -2,7 +2,7 @@
 
 
 (defgeneric %find-documentation (documentation type name))
-(defgeneric %paragraphs-with-label (documentation label))
+(defgeneric %select-documentation (documentation package label type))
 (defgeneric insert-documentation (documentation type name arguments))
 (defgeneric format-to-stream (formatter
                               stream
@@ -61,23 +61,39 @@
   nil)
 
 
-(defmethod %paragraphs-with-label ((documentation (eql nil))
-                                   label)
+(defmethod %select-documentation ((documentation (eql nil))
+                                  package label type)
   nil)
 
 
-(defmethod %paragraphs-with-label ((documentation documentation-collection)
-                                   label)
-  (let ((result nil))
-    (maphash (lambda (key value)
-               (declare (ignore key))
-               (maphash (lambda (key value)
-                          (declare (ignore key))
-                          (let ((labeled (getf value label)))
-                            (unless (null labeled)
-                              (push labeled result))))
-                        value))
-             (read-content documentation))
+(defmethod %select-documentation ((documentation documentation-collection)
+                                  package label type)
+  (let ((result nil)
+        (label (if (listp label) label (list label)))
+        (package (if (listp package) package (list package)))
+        (type (if (listp type) type (list type))))
+    (flet ((on-content (key value)
+             (declare (ignore key))
+             (maphash (lambda (key value)
+                        (let ((key (or (second key) (first key))))
+                          (if (or (null package)
+                                  (member (symbol-package key) package))
+                              (map nil
+                                   (lambda (label)
+                                     (let ((paragraph (getf value label)))
+                                       (unless (null paragraph)
+                                         (push (list* (list package label type)
+                                                      paragraph)
+                                               result))))
+                                   label))))
+                      value)))
+      (if (null type)
+          (maphash (lambda (key value) (declare (ignore key)) (maphash #'on-content value))
+                   (read-content documentation))
+          (map nil (lambda (x &aux (table (gethash x (read-content documentation))))
+                     (unless (null table)
+                       (maphash #'on-content table)))
+               type)))
     result))
 
 
