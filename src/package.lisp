@@ -12,7 +12,7 @@
    #:clear-documentation
    #:documentation-collection
    #:select-documentation
-   #:execute-paragraphs
+   #:execute-documentation
    #:find-documentation
    #:make-documentation-collection
    #:paragraphs-with-label
