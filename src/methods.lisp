@@ -72,19 +72,30 @@
         (label (if (listp label) label (list label)))
         (package (if (listp package) package (list package)))
         (type (if (listp type) type (list type))))
-    (labels ((on-documentation (type symbol documentation)
-               (let ((key (or (second symbol) (first symbol)))
-                     (name (if (eq 'setf (first symbol)) symbol (first symbol))))
+    (labels ((on-paragraphs (name type documentation)
+               (let ((cycle t))
+                 (if (null label)
+                     (loop for subdoc on documentation
+                           for label = (first subdoc)
+                           for doc = (second subdoc)
+                           do (when (shiftf cycle (null cycle))
+                                (push (list* (list name type label)
+                                             doc)
+                                      result)))
+                     (map nil
+                          (lambda (label)
+                            (let ((paragraph (getf documentation label)))
+                              (unless (null paragraph)
+                                (push (list* (list name type label)
+                                             paragraph)
+                                      result))))
+                          label))))
+             (on-documentation (type name documentation)
+               (let ((key (if (symbolp name) name (second name))))
                  (when (or (null package)
-                           (member (symbol-package key) package))
-                   (map nil
-                        (lambda (label)
-                          (let ((paragraph (getf documentation label)))
-                            (unless (null paragraph)
-                              (push (list* (list name type label)
-                                           paragraph)
-                                    result))))
-                        label))))
+                           (member (symbol-package key)
+                                   (mapcar #'find-package package)))
+                   (on-paragraphs name type documentation))))
              (on-type (type value)
                (maphash (lambda (symbol documentation)
                           (on-documentation type symbol documentation))
@@ -95,7 +106,7 @@
                      (unless (null table)
                        (on-type x table)))
                type)))
-    result)))
+    result))
 
 
 (defmethod docs:format-documentation
@@ -103,7 +114,10 @@
             type
             name
             arguments)
-  (insert-documentation *documentation* type name arguments))
+  (insert-documentation *documentation*
+                        type
+                        (first name)
+                        arguments))
 
 
 (defmethod format-to-stream (formatter

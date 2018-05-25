@@ -14,13 +14,19 @@
   (function clear-documentation
     (:description "Removes everything from *DOCUMENTATION*. Does nothing if *DOCUMENTATION* is bound to nil."))
 
+  (function select-documentation
+    (:description "Selects all sections with LABEL from *documentation* documenting object named by symbols from PACKAGE and TYPE. LABEL, PACKAGE and TYPE may be: just a symbol, list of symbols (will return union) or nil (will disable filtering)."))
+
+  (function execute-documentation
+    (:description "Calls SELECT-DOCUMENTATION first, then attempts to read, compile and funcall each result."))
+
   (variable *documentation-sections*
     (:description "Alist used by RICH-FORMATTER to determine sections of documentation. Maps symbols to section names.. RICH-FORMATTER will always use order of formatting identical to that provided by this list."))
 
   (variable *documentation*
     (:description "Acumulated arguments of define-docs. Can be (and is by default) bound to nil, which disables this feature.")
-    (:examples (("Disable gathering" (defparameter docs.ext:*documentation* nil))
-                ("Enable gathering" (defparameter docs.ext:*documentation* (docs.ext:make-documentation-collection))))))
+    (:examples (("Disable gathering" "(defparameter docs.ext:*documentation* nil)")
+                ("Enable gathering" "(defparameter docs.ext:*documentation* (docs.ext:make-documentation-collection))\"))))
 
   (type documentation-collection
     (:description "Class used to map type and name to arguments of define-docs."
