@@ -26,7 +26,7 @@
   (variable *documentation*
     (:description "Acumulated arguments of define-docs. Can be (and is by default) bound to nil, which disables this feature.")
     (:examples (("Disable gathering" "(defparameter docs.ext:*documentation* nil)")
-                ("Enable gathering" "(defparameter docs.ext:*documentation* (docs.ext:make-documentation-collection))\"))))
+                ("Enable gathering" "(defparameter docs.ext:*documentation* (docs.ext:make-documentation-collection))"))))
 
   (type documentation-collection
     (:description "Class used to map type and name to arguments of define-docs."
