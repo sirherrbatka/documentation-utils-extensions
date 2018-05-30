@@ -18,7 +18,10 @@
     (:description "Selects all sections with LABEL from *documentation* documenting object named by symbols from PACKAGE and TYPE. LABEL, PACKAGE and TYPE may be: just a symbol, list of symbols (will return union) or nil (will disable filtering)."))
 
   (function execute-documentation
-    (:description "Calls SELECT-DOCUMENTATION first, then attempts to read, compile and funcall each result."))
+    (:description "Calls SELECT-DOCUMENTATION first, then attempts to read-from-string, compile and execute each result. Works with sections containing pure strings as well as lists of strings. In the second case, whole paragraph is executed in one go."
+     :notes "This function is used most often with respect to :EXAMPLES section."
+     :exceptional-situations "Does not attempt to handle errors signaled by either read or compile. Simply assumes that paragraph should contain valid Lisp code."
+     :returns "Always nil"))
 
   (variable *documentation-sections*
     (:description "Alist used by RICH-FORMATTER to determine sections of documentation. Maps symbols to section names.. RICH-FORMATTER will always use order of formatting identical to that provided by this list."))
